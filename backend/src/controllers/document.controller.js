@@ -3,6 +3,33 @@ const pdfService = require('../services/pdf.service');
 const chunkingService = require('../services/chunking.service');
 const vectorStoreService = require('../services/vectorstore.service');
 
+// Background processing function
+async function processDocumentBackground(document) {
+  try {
+    const { text } = await pdfService.extractText(document.filePath);
+    const cleanedText = pdfService.cleanText(text);
+
+    const chunks = await chunkingService.chunkLegalDocument(
+      cleanedText,
+      document.originalName
+    );
+
+    await vectorStoreService.addDocuments(chunks);
+
+    document.status = 'completed';
+    document.totalChunks = chunks.length;
+    document.processedAt = new Date();
+    await document.save();
+
+    console.log(`Document processed: ${document.originalName} (${chunks.length} chunks)`);
+  } catch (error) {
+    document.status = 'failed';
+    document.error = error.message;
+    await document.save();
+    console.error(`Document processing failed: ${error.message}`);
+  }
+}
+
 class DocumentController {
   async uploadDocument(req, res, next) {
     try {
@@ -30,37 +57,12 @@ class DocumentController {
         filename: document.originalName,
       });
 
-      this.processDocument(document).catch((error) => {
+      // Process document in background
+      processDocumentBackground(document).catch((error) => {
         console.error('Background processing error:', error);
       });
     } catch (error) {
       next(error);
-    }
-  }
-
-  async processDocument(document) {
-    try {
-      const { text } = await pdfService.extractText(document.filePath);
-      const cleanedText = pdfService.cleanText(text);
-
-      const chunks = await chunkingService.chunkLegalDocument(
-        cleanedText,
-        document.originalName
-      );
-
-      await vectorStoreService.addDocuments(chunks);
-
-      document.status = 'completed';
-      document.totalChunks = chunks.length;
-      document.processedAt = new Date();
-      await document.save();
-
-      console.log(`Document processed: ${document.originalName} (${chunks.length} chunks)`);
-    } catch (error) {
-      document.status = 'failed';
-      document.error = error.message;
-      await document.save();
-      console.error(`Document processing failed: ${error.message}`);
     }
   }
 

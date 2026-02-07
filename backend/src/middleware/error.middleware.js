@@ -1,7 +1,8 @@
 const errorHandler = (err, req, res, next) => {
   console.error('Error:', err);
 
-  if (err instanceof multer.MulterError) {
+  // Check for Multer errors
+  if (err.name === 'MulterError') {
     if (err.code === 'LIMIT_FILE_SIZE') {
       return res.status(400).json({
         success: false,
@@ -14,7 +15,7 @@ const errorHandler = (err, req, res, next) => {
     });
   }
 
-  if (err.message.includes('Only PDF files')) {
+  if (err.message && err.message.includes('Only PDF files')) {
     return res.status(400).json({
       success: false,
       error: err.message,

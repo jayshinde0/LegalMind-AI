@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LegalMind AI - Quick Test</title>
+    <style>
+        body { font-family: Arial; max-width: 800px; margin: 50px auto; padding: 20px; }
+        .section { margin: 20px 0; padding: 20px; border: 1px solid #ddd; border-radius: 8px; }
+        button { padding: 10px 20px; background: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #45a049; }
+        .result { margin-top: 10px; padding: 10px; background: #f5f5f5; border-radius: 4px; }
+        input[type="file"] { margin: 10px 0; }
+        textarea { width: 100%; padding: 10px; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h1>🧑‍⚖️ LegalMind AI - Quick Test</h1>
+    
+    <div class="section">
+        <h2>1. Upload PDF Document</h2>
+        <input type="file" id="fileInput" accept=".pdf" />
+        <button onclick="uploadFile()">Upload</button>
+        <div id="uploadResult" class="result"></div>
+    </div>
+    
+    <div class="section">
+        <h2>2. Ask a Question</h2>
+        <textarea id="queryInput" rows="3" placeholder="Enter your question about the uploaded documents..."></textarea>
+        <button onclick="askQuestion()">Ask Question</button>
+        <div id="queryResult" class="result"></div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:5000/api';
+        
+        async function uploadFile() {
+            const fileInput = document.getElementById('fileInput');
+            const resultDiv = document.getElementById('uploadResult');
+            
+            if (!fileInput.files[0]) {
+                resultDiv.innerHTML = '❌ Please select a PDF file';
+                return;
+            }
+            
+            resultDiv.innerHTML = '⏳ Uploading...';
+            
+            const formData = new FormData();
+            formData.append('document', fileInput.files[0]);
+            
+            try {
+                const response = await fetch(`${API_URL}/documents/upload`, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    resultDiv.innerHTML = `
+                        ✅ <strong>Upload Successful!</strong><br>
+                        Document: ${data.document.filename}<br>
+                        Chunks: ${data.document.chunkCount}<br>
+                        ID: ${data.document._id}
+                    `;
+                } else {
+                    resultDiv.innerHTML = `❌ Error: ${data.error}`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `❌ Error: ${error.message}`;
+            }
+        }
+        
+        async function askQuestion() {
+            const queryInput = document.getElementById('queryInput');
+            const resultDiv = document.getElementById('queryResult');
+            
+            if (!queryInput.value.trim()) {
+                resultDiv.innerHTML = '❌ Please enter a question';
+                return;
+            }
+            
+            resultDiv.innerHTML = '⏳ Processing...';
+            
+            try {
+                const response = await fetch(`${API_URL}/query`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ query: queryInput.value })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    let html = `<strong>Answer:</strong><br>${data.answer}<br><br>`;
+                    
+                    if (data.sources && data.sources.length > 0) {
+                        html += '<strong>Sources:</strong><br>';
+                        data.sources.forEach((source, i) => {
+                            html += `${i + 1}. ${source.source} (Page ${source.page})<br>`;
+                        });
+                    }
+                    
+                    resultDiv.innerHTML = html;
+                } else {
+                    resultDiv.innerHTML = `❌ Error: ${data.error}`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `❌ Error: ${error.message}`;
+            }
+        }
+    </script>
+</body>
+</html>

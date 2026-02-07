@@ -20,9 +20,16 @@ class VectorStoreService {
         console.log('Loaded existing FAISS index');
       } catch (error) {
         console.log('Creating new FAISS index');
-        this.vectorStore = await FaissStore.fromDocuments([], this.embeddings);
+        try {
+          this.vectorStore = await FaissStore.fromDocuments([], this.embeddings);
+          console.log('FAISS index created successfully');
+        } catch (createError) {
+          console.error('Failed to create FAISS index:', createError.message);
+          throw createError;
+        }
       }
     } catch (error) {
+      console.error('VectorStore initialization error:', error);
       throw new Error(`VectorStore initialization failed: ${error.message}`);
     }
   }

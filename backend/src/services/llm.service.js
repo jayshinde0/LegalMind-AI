@@ -19,12 +19,10 @@ class LLMService {
       const context = formatContext(retrievedDocs);
       const userPrompt = getUserPrompt(context, query);
 
-      const messages = [
-        { role: 'system', content: SYSTEM_PROMPT },
-        { role: 'user', content: userPrompt },
-      ];
+      // Google Gemini doesn't support system role, combine into user message
+      const fullPrompt = `${SYSTEM_PROMPT}\n\n${userPrompt}`;
 
-      const response = await this.llm.invoke(messages);
+      const response = await this.llm.invoke(fullPrompt);
       
       const sources = this.extractSources(retrievedDocs);
 

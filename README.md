@@ -60,9 +60,10 @@ LLM generates grounded answer → Citations extracted → Response to user
 
 - **Frontend**: React.js, Tailwind CSS, Axios
 - **Backend**: Node.js, Express.js
-- **AI/RAG**: LangChain.js, FAISS, OpenAI Embeddings
-- **LLM**: GPT-4 / Claude (configurable)
-- **Database**: MongoDB
+- **AI/RAG**: LangChain.js, FAISS, Google Gemini (FREE) / OpenAI
+- **LLM**: Google Gemini Pro (FREE) / GPT-4 (configurable)
+- **Embeddings**: Google Embeddings (FREE) / OpenAI (configurable)
+- **Database**: MongoDB (FREE tier)
 - **PDF Processing**: pdf-parse
 - **Vector Store**: FAISS (faiss-node)
 
