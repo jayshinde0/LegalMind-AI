@@ -31,30 +31,25 @@ class TreeReasonerService {
         documentTree.rootNodes,
         documentTree.clauses
       );
-      
       // Step 2: Traverse deeper if needed
       const traversalPath = await this.traverseTree(
         query,
         topLevelSelection.clauseId,
         documentTree.clauses
       );
-      
       // Step 3: Extract full section content
       const sectionContent = this.extractSectionContent(
         traversalPath,
         documentTree.clauses
       );
-      
       // Step 4: Generate grounded answer
       const answer = await this.generateGroundedAnswer(
         query,
         sectionContent,
         traversalPath
       );
-      
       // Step 5: Build citation
       const citation = this.buildCitation(traversalPath, documentTree);
-      
       return {
         answer: answer.text,
         confidence: answer.confidence,
