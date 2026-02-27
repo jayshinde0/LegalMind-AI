@@ -17,17 +17,16 @@ const documentSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  totalChunks: {
-    type: Number,
-    default: 0,
-  },
   status: {
     type: String,
     enum: ['processing', 'completed', 'failed'],
     default: 'processing',
   },
-  vectorStoreId: {
-    type: String,
+  metadata: {
+    pages: Number,
+    totalClauses: Number,
+    maxDepth: Number,
+    documentType: String,
   },
   uploadedAt: {
     type: Date,
@@ -39,6 +38,8 @@ const documentSchema = new mongoose.Schema({
   error: {
     type: String,
   },
+}, {
+  timestamps: true,
 });
 
 module.exports = mongoose.model('Document', documentSchema);

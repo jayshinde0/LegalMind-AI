@@ -23,7 +23,7 @@ function App() {
   const handleUploadSuccess = (response) => {
     setNotification({
       type: 'success',
-      message: `${response.filename} uploaded successfully and is being processed`,
+      message: `${response.document.originalName} uploaded successfully and is being processed`,
     });
     setTimeout(() => setNotification(null), 5000);
     loadDocuments();
@@ -34,7 +34,7 @@ function App() {
       <div className="container mx-auto px-4 py-8">
         <header className="text-center mb-8">
           <h1 className="text-4xl font-bold text-gray-800 mb-2">LegalMind AI</h1>
-          <p className="text-gray-600">RAG-Based Legal Document Assistant</p>
+          <p className="text-gray-600">Tree-Based Reasoning Legal Document Assistant</p>
         </header>
 
         {notification && (
@@ -79,7 +79,7 @@ function App() {
                         {doc.status}
                       </span>
                       <span className="text-xs text-gray-500">
-                        {doc.totalChunks} chunks
+                        {doc.metadata?.totalClauses || 0} clauses
                       </span>
                     </div>
                   </div>
@@ -99,7 +99,7 @@ function App() {
         </div>
 
         <footer className="mt-8 text-center text-sm text-gray-600">
-          <p>Powered by GPT-4, LangChain, and FAISS Vector Database</p>
+          <p>Powered by Mistral (Ollama) with Tree-Based Reasoning</p>
         </footer>
       </div>
     </div>

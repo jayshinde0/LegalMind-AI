@@ -45,7 +45,7 @@ export const deleteDocument = async (documentId) => {
 
 export const queryDocuments = async (query) => {
   const response = await apiClient.post('/query', { query });
-  return response.data;
+  return response.data; // Returns the data object directly
 };
 
 export default apiClient;

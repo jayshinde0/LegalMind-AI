@@ -36,9 +36,9 @@ const ChatInterface = () => {
       
       const assistantMessage = {
         type: 'assistant',
-        content: response.data.answer,
-        sources: response.data.sources,
-        hasAnswer: response.data.hasAnswer,
+        content: response.answer,
+        sources: response.sources,
+        confidence: response.confidence,
         timestamp: new Date().toISOString(),
       };
 
@@ -46,7 +46,7 @@ const ChatInterface = () => {
     } catch (error) {
       const errorMessage = {
         type: 'error',
-        content: error.response?.data?.error || 'Failed to process query',
+        content: error.response?.data?.error || error.message || 'Failed to process query',
         timestamp: new Date().toISOString(),
       };
       setMessages((prev) => [...prev, errorMessage]);
