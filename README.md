@@ -1,6 +1,6 @@
 # 🧑‍⚖️ LegalMind AI
 
-> A production-grade Tree-Based Reasoning RAG system for intelligent legal document analysis with zero hallucinations and explainable AI.
+A production-grade Tree-Based Reasoning RAG system for intelligent legal document analysis with zero hallucinations and explainable AI.
 
 ##  Overview
 
@@ -21,54 +21,54 @@ LegalMind AI uses Tree-Based Reasoning RAG to:
 - ✅ Run 100% locally with no external API costs
 - ✅ Achieve 95%+ accuracy with explainable AI
 
-## ✨ Features
+##  Features
 
 ### Core Functionality
-- 📄 **PDF Upload & Processing** - Drag-and-drop interface for legal documents
-- 🔍 **Semantic Search** - Find information by meaning, not just keywords
-- 💬 **AI-Powered Q&A** - Ask questions in natural language
-- 📚 **Citation Tracking** - Every answer includes source references
-- ✅ **Zero Hallucinations** - Answers only from document content
-- 🎯 **Multi-Document Support** - Query across multiple documents
-- 📊 **Document Management** - View, delete, and organize documents
+-  **PDF Upload & Processing** - Drag-and-drop interface for legal documents
+-  **Semantic Search** - Find information by meaning, not just keywords
+-  **AI-Powered Q&A** - Ask questions in natural language
+-  **Citation Tracking** - Every answer includes source references
+-  **Zero Hallucinations** - Answers only from document content
+-  **Multi-Document Support** - Query across multiple documents
+-  **Document Management** - View, delete, and organize documents
 
 ### Technical Features
-- 🚀 **Fast Processing** - 50-page documents processed in ~20 seconds
-- 💰 **100% Free AI Stack** - No paid API costs
-- 🔒 **Local Embeddings** - Privacy-focused, runs on your server
-- 📈 **Scalable Architecture** - Service layer pattern, easy to extend
-- 🛡️ **Error Handling** - Comprehensive validation and error recovery
-- 🎨 **Responsive UI** - Works on desktop, tablet, and mobile
+-  **Fast Processing** - 50-page documents processed in ~20 seconds
+-  **100% Free AI Stack** - No paid API costs
+-  **Local Embeddings** - Privacy-focused, runs on your server
+-  **Scalable Architecture** - Service layer pattern, easy to extend
+-  **Error Handling** - Comprehensive validation and error recovery
+-  **Responsive UI** - Works on desktop, tablet, and mobile
 
-## 🎬 Demo
+##  Demo
 
 ### Upload a Document
 ```
-## ✨ Features
+##  Features
 
 ### Core Functionality
-- 📄 **PDF Upload & Processing** - Drag-and-drop interface for legal documents
-- 🌳 **Tree-Based Reasoning** - LLM navigates document structure intelligently
-- 💬 **AI-Powered Q&A** - Ask questions in natural language
-- 📚 **Clause-Level Citations** - Every answer includes exact clause references
-- ✅ **Zero Hallucinations** - Answers only from selected document sections
-- 🔍 **Explainable AI** - See complete reasoning path
-- 📊 **Confidence Scoring** - Visual confidence indicators
-- 🎯 **Multi-Document Support** - Query across multiple documents
+-  **PDF Upload & Processing** - Drag-and-drop interface for legal documents
+-  **Tree-Based Reasoning** - LLM navigates document structure intelligently
+-  **AI-Powered Q&A** - Ask questions in natural language
+-  **Clause-Level Citations** - Every answer includes exact clause references
+-  **Zero Hallucinations** - Answers only from selected document sections
+-  **Explainable AI** - See complete reasoning path
+-  **Confidence Scoring** - Visual confidence indicators
+-  **Multi-Document Support** - Query across multiple documents
 
 ### Technical Features
-- 🚀 **Fast Processing** - 38 clauses extracted in ~3 seconds
-- 💰 **100% Free & Local** - No API costs, runs on your machine
-- 🔒 **Privacy-First** - All processing happens locally
-- 📈 **Scalable Architecture** - Service layer pattern, easy to extend
-- 🛡️ **Robust Error Handling** - Graceful fallbacks and retry logic
-- 🎨 **Responsive UI** - Works on desktop, tablet, and mobile
-- 🧠 **Reasoning Transparency** - See which clauses were considered
+-  **Fast Processing** - 38 clauses extracted in ~3 seconds
+-  **100% Free & Local** - No API costs, runs on your machine
+-  **Privacy-First** - All processing happens locally
+-  **Scalable Architecture** - Service layer pattern, easy to extend
+-  **Robust Error Handling** - Graceful fallbacks and retry logic
+-  **Responsive UI** - Works on desktop, tablet, and mobile
+-  **Reasoning Transparency** - See which clauses were considered
 Click on citation → See exact text from original document
 Verify accuracy → Trust the answer
 ```
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 ### Frontend
 - **React 18** - UI library
@@ -89,7 +89,7 @@ Citation: Clause 2.1 - Base Salary (Page 1)
 ### AI/ML
 - **LLM**: Google Gemini 2.5 Flash Lite (text generation)
 - **Embeddings**: HuggingFace all-MiniLM-L6-v2 (384-dim, local)
-## 🛠️ Tech Stack
+##  Tech Stack
 
 ### Frontend
 - **React 18** - UI library
@@ -115,48 +115,7 @@ Citation: Clause 2.1 - Base Salary (Page 1)
 - **Design**: Service Layer Pattern, MVC
 - **API**: RESTful
 - **Reasoning**: LLM-powered clause selection and traversal   │ REST API
-## 🏗️ Architecture
 
-### High-Level Overview
-
-```
-┌─────────────────────────────────────────────────────────┐
-│                    USER (Browser)                        │
-└────────────────────┬────────────────────────────────────┘
-                     │
-                     ↓
-┌─────────────────────────────────────────────────────────┐
-│              FRONTEND (React + Tailwind)                 │
-│  • File Upload Component                                 │
-│  • Chat Interface with Confidence Bars                   │
-│  • Citation Display with Clause Numbers                  │
-└────────────────────┬────────────────────────────────────┘
-                     │ REST API
-                     ↓
-┌─────────────────────────────────────────────────────────┐
-│              BACKEND (Node.js + Express)                 │
-│  ┌─────────────────────────────────────────────────┐   │
-│  │  Document Processing Pipeline                    │   │
-│  │  PDF → Text → Clause Extraction → Tree Building │   │
-│  │  → MongoDB Storage                               │   │
-│  └─────────────────────────────────────────────────┘   │
-│  ┌─────────────────────────────────────────────────┐   │
-│  │  Query Processing Pipeline                       │   │
-│  │  Query → LLM Clause Selection → Tree Traversal  │   │
-│  │  → Section Extraction → Grounded Answer         │   │
-│  └─────────────────────────────────────────────────┘   │
-└────────────────────┬────────────────────────────────────┘
-                     │
-        ┌────────────┴────────────┐
-        ↓                         ↓
-┌──────────────────┐    ┌──────────────────┐
-│   MONGODB        │    │   OLLAMA         │
-│   (Documents +   │    │   (Mistral 7B)   │
-│   Tree Structure)│    │   (Local LLM)    │
-└──────────────────┘    └──────────────────┘
-```
-
-### Tree-Based Reasoning Pipeline
 
 **Document Ingestion:**
 ```
@@ -544,12 +503,12 @@ npm install --production
 - Set `NODE_ENV=production` in production
 - Use process manager (PM2) for Node.js in production
 
-## 🤝 Contributing
+##  Contributing
 
 Contributions are welcome! Please follow these steps:
 
 1. Fork the repository
-## 🙏 Acknowledgments
+##  Acknowledgments
 
 - [Ollama](https://ollama.ai/) - Local LLM runtime
 - [Mistral AI](https://mistral.ai/) - Open-source LLM
